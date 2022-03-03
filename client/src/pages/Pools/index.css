@@ -1,0 +1,74 @@
+.pool-title {
+    font-size: 57px;
+    font-weight: bold;
+    color: white;
+}
+.pool-subtitle {
+    color: rgb(12, 96, 171);
+    font-size: 17px;
+    font-weight: bold;
+}
+ul > li {
+    margin-bottom: 4px;
+}
+.hr-blue{
+    color: rgb(0, 121, 148);
+    height: 2px;
+}
+
+.pool-image {
+    min-width: 310px;
+}
+
+.pool-card {
+    width: 28%;
+    background-color: white;
+    border-radius: 27px;
+    padding: 12px 15px;
+    margin: 10px;
+    min-width: 280px;
+}
+.w-60 {
+    width: 60%;
+}
+.po-out-btn {
+    border: solid 2px rgb(65, 173, 206);
+    display: flex;
+    padding: 3px 7px;
+    justify-content: center;
+    border-radius: 17px;
+    font-size: 14px;
+    font-weight: bold;    
+}
+.pool-title-color {
+    color: rgb(65, 173, 206);
+}
+.stack-amount {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+.reward-color {
+    color: #22a900;
+    font-weight: bold;
+}
+.pool-percentage-btn {
+    margin-right: 7px;
+    padding: 5px 10px;
+    border: solid 1px rgb(3 210 255);
+    border-radius: 7px;
+    cursor: pointer;
+}
+.pool-percentage-btn:hover {
+    margin-right: 7px;
+    padding: 5px 10px;
+    border: solid 1px rgb(3 210 255);
+    border-radius: 7px;
+    color: white;
+    background-color: rgb(3 210 255);
+    animation-delay: 3s;
+}

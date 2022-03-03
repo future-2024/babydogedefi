@@ -1,0 +1,117 @@
+.fa-title {
+    font-size: 60px;
+    font-weight: bold;
+}
+.cover-img{
+    background-image: url('../../img/quotation/cover.svg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.fa-main {
+    padding: 0 5%;
+}
+
+.c-unchecked {
+    padding:3px 8px;
+    color:rgb(0, 183, 223);
+    font-weight:bold;
+    cursor: pointer;
+}
+.c-checked {
+    padding:3px 8px;
+    border-radius:17px; 
+    background-color:rgb(0, 183, 223);
+    color:white;
+    font-weight:bold;
+    cursor: pointer;
+}
+.c-switch {
+    border-radius: 17px; 
+    background-color:rgb(231, 231, 231); 
+    width:130px;
+}
+
+.c-input {
+    padding:7px 12px;
+    border-radius: 12px;
+    background-color: rgb(238, 234, 244);
+    width: 130px;
+    border: 1px solid rgb(215, 202, 236);
+    border-radius: 16px;
+}
+.c-input-content {
+    padding:0;
+    border-radius: 12px;
+    background-color: rgb(238, 234, 244);
+    width: 130px;
+    position:absolute; z-index:23;
+    right:-1px;
+    top:28px;
+    border: 1px solid rgb(215, 202, 236);
+    border-top-width: 0px;
+    border-radius: 0px 0px 16px 16px;
+}
+
+::placeholder {
+    color: rgb(0, 183, 223);
+    opacity: 1; /* Firefox */
+}
+
+.farm-card {
+    width: 30%;
+    background-color: white;
+    border-radius: 27px;
+    padding: 12px 15px;
+    margin: 10px;
+    min-width: 280px;
+}
+.w-65 {
+    width: 65px;
+}
+.fa-out-btn {
+    border: solid 2px rgb(65, 173, 206);
+    display: flex;
+    padding: 3px 7px;
+    justify-content: center;
+    border-radius: 17px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.fa-btn {
+    color: white;
+    background-color: rgb(65, 173, 206);
+    display: flex;
+    padding: 4px 17px;
+    justify-content: center;
+    border-radius: 17px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.farm-title-color {
+    color: rgb(65, 173, 206);
+}
+.text-grey {
+    color: rgb(160, 159, 159);
+    font-size: 24px;
+    /* font-weight: bold; */
+}
+.fa-btn-disable {
+    border-radius: 20px;
+    padding: 12px 24px;
+    background-color: rgb(231, 231, 231);
+    font-size: 17px;
+    font-weight: bold;
+    color: rgb(201, 201, 201);
+}
+.fs-11 {
+    font-size: 11px;
+}
+.hr-grey {
+    color: grey;
+}
+.temp-box-shadow {
+    box-shadow: 0px 1px 2px 0px rgba(0,255,255,0.7),
+            1px 2px 4px 0px rgba(148, 35, 170, 0.521),
+            2px 4px 8px 0px rgba(0,255,255,0.7),
+            2px 4px 16px 0px rgba(0,255,255,0.7);
+}
