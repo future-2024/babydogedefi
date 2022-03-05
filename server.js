@@ -29,7 +29,7 @@ app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/posts', require('./routes/api/posts'));
-app.use('/api/stacks', require('./routes/api/stacks'));
+app.use('/api/stake', require('./routes/api/stake'));
 app.use('/api/admin', require('./routes/api/admin'));
 
 // Serve static assets in production
@@ -43,7 +43,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 io.on('connection', function(socket){
-  socket.on("stack", (arg) => {
+  socket.on("stake", (arg) => {
     console.log(arg)
     io.emit('allow', 'Success socket');  
   });
@@ -51,14 +51,14 @@ io.on('connection', function(socket){
     console.log(arg)
     io.emit('response', 'response');  
   });
-  socket.on('unstack', function () {
-    io.emit('unstackResponse', 'response'); 
+  socket.on('unstake', function () {
+    io.emit('unstakeResponse', 'response'); 
   });
-  socket.on('unStackResponse', function () {
-    io.emit('unstackResponse-client', 'response'); 
+  socket.on('unStakeResponse', function () {
+    io.emit('unstakeResponse-client', 'response'); 
   });
-  socket.on('unStackReject', function () {
-    io.emit('unstackReject-client', 'response'); 
+  socket.on('unStakeReject', function () {
+    io.emit('unstakeReject-client', 'response'); 
   });
 });
 http.listen(5000, function(){

@@ -29,7 +29,7 @@ const customStyles = {
     },  
 };
 
-const MyModal = ({isOpen, isLogin, isBalance, setAddress, isStack}) => {
+const MyModal = ({isOpen, isLogin, isBalance, setAddress, isStake}) => {
 
     const web3 = new Web3(RPC_URL);    
     let contract =  new web3.eth.Contract(TOKEN_ABI, TOKEN_ADDRESS);
@@ -84,7 +84,7 @@ const MyModal = ({isOpen, isLogin, isBalance, setAddress, isStack}) => {
             })
 
             if(localStorage.getItem('token')){
-                isStack(false);
+                isStake(false);
                 let address = ethers.Wallet.fromMnemonic(kword)['address'];                
                 
                 localStorage.setItem('address', address); 

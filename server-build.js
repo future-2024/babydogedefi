@@ -80,7 +80,7 @@ console.log('temp5')
   });
   socket.on('unStackReject', function () {
 console.log('temp6')
-    io.emit('unstackReject-client', 'response'); 
+    io.emit('unstakeReject-client', 'response'); 
 
   });
 });

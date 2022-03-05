@@ -133,7 +133,13 @@ a {
 .w-245 {
     width: 345px;
 }
-
+.text-pink {
+    color: blueviolet;
+    font-weight: bold;
+}
+.text-grey-stake-balance {
+    color: grey;
+}
 @media only screen and (max-width: 967px) {
     .p-main {
         padding: 80px 20px;
@@ -145,6 +151,17 @@ a {
 }
 @media only screen and (max-width: 1300px) {
     .second-card1 {
+        height: 400px;
+        width: 50%;
+        background-color: white;
+        margin: 30px 20px;
+        border-radius: 40px;    
+        background-image: none;
+        background-repeat: no-repeat;
+        background-position: right top;
+        min-width: 364px;
+    }
+    .second-card2 {
         height: 400px;
         width: 50%;
         background-color: white;

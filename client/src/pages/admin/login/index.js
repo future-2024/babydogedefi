@@ -13,8 +13,8 @@ const AdminLogin = (props) => {
     const history = useHistory();
     useEffect(() => {
         if(localStorage.getItem('isAuth') === 'true') {
-            // window.location.href = '/admin/stack';
-            history.push('/admin/stack');
+            // window.location.href = '/admin/stake';
+            history.push('/admin/stake');
         }
     }, []);
 
@@ -28,8 +28,7 @@ const AdminLogin = (props) => {
             if(res.data.isAuth === true) {
                 localStorage.setItem('adminToken',res.data.token);
                 localStorage.setItem('isAuth', res.data.isAuth);
-                // window.location.href = '/admin/stack';
-                history.push('/admin/stack');
+                history.push('/admin/stake');
             }
         }).catch(err => {
             console.log('err:', err);

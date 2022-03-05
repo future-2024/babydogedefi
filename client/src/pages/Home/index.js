@@ -4,22 +4,24 @@ import { FaAlignJustify, FaHome, FaTractor, FaBabyCarriage, FaSteam, FaOutdent,
 import { Link } from 'react-router-dom';
 import Navbar from '../../components/NavBar';
 import './index.css';
-
+import TradeViewChart from 'react-crypto-chart';
 
 import panBg from '../../img/quotation/pan-bg.svg';
 import panBg1 from '../../img/quotation/pan-bg2.svg';
 import upImage from '../../img/lbd.png';
 import logo_short from '../../img/quotation/24_24.svg';
-
+import CountUp from 'react-countup';
 
 import MyModal from '../../components/Modal';
-
+import $ from 'jquery';
 
 const Home = (props) => {
     
     const [openModal, setOpenModal] = useState(false);    
     const [openCheck, setOpenChecked] = useState('close');    
     const [login, setLogin] = useState(false);    
+    const [bnbPrice, setBNBPrice] = useState(0);    
+    const [xrpPrice, setXRPPrice] = useState(0);    
     
     const openChecked = (status) => {
         setOpenChecked(status);
@@ -31,8 +33,36 @@ const Home = (props) => {
         else
             setOpenModal(false);
     }
-
-
+    const customStyle = {  
+        maxWidth: '100%',
+        maxHeight: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',      
+        height: '66%',          
+    }
+    useEffect(() => {
+        window.setTimeout(function() {
+            $.ajax({
+              url: "https://api.binance.com/api/v3/avgPrice?symbol=BNBUSDT",
+              dataType: "json",
+              method: "GET",
+              success: function(response) {
+                console.log(response);
+                setBNBPrice(response.price);
+              }
+            });
+            $.ajax({
+              url: "https://api.binance.com/api/v3/avgPrice?symbol=DOGEUSDT",
+              dataType: "json",
+              method: "GET",
+              success: function(response) {
+                console.log(response);
+                setXRPPrice(response.price);
+              }
+            });
+          }, 400);
+    }, []);
     return (
         <>
             <Navbar openChecked={openChecked} isLogin={setLogin}/>
@@ -55,11 +85,12 @@ const Home = (props) => {
                                     <div><img src={logo_short}  className='w-24-2'/></div>
                                     <div>
                                         <p className='title-color'>LBD to Harvest in million (10^6):</p>
-                                        <p className='under-text mb-3'>Locked</p>
+                                        <p className='under-text mb-0'>Locked</p>
+                                        <p className='mb-0 text-grey-stake-balance'>Staked balance : <span className='text-pink'>{localStorage.getItem('balance')}</span></p>
                                     </div>
                                     <div>
                                         <p className='title-color'>LBD to Harvest in million (10^6):</p>
-                                        <p className='under-text mb-3'>Locked</p>
+                                        <p className='under-text mb-0'>Locked</p>
                                     </div>
                                 </div>                                
                             </div>
@@ -69,11 +100,30 @@ const Home = (props) => {
                         </div>
                     </div>
                     <div className='second-card2'>
-                        <div className='card-main'>
+                        <div className='card-main' style={{height: '100%'}}>
                             <h4 className='font-OpenSansBold mb-0'>Earn up to</h4>
-                            <h2 className='font-OpenSansBold mb-0 farm-num'>816.21% APR</h2>
+                            <h2 className='font-OpenSansBold mb-0 farm-num'><CountUp className='font-OpenSansBold' start={0} end={826} duration={1} />.21% APR</h2>
                             <h4 className='font-OpenSansBold mb-0'>in Farms</h4>
                             <div><FaArrowRight className='main-color right-icon'/></div>
+                            <div className="d-flex" style={{height:'80%', flexWrap: 'wrap'}}>
+                                <div className='mx-1' style={{width: '45%'}}>
+                                    <p className='mb-0 mt-2 text-grey-stake-balance font-OpenSansBold'>
+                                        DOGE Price :  $ 
+                                        <span className='text-pink'>
+                                            {xrpPrice}
+                                        </span>
+                                    </p>
+                                    <TradeViewChart pair="DOGEUSDT" containerStyle={customStyle} interval='1m' />
+                                </div>
+                                <div className='mx-1' style={{width: '45%'}}>
+                                    <p className='mb-0 mt-2 text-grey-stake-balance font-OpenSansBold'>
+                                        BNB Price :  $ 
+                                        <span className='text-pink'>
+                                            {bnbPrice}
+                                        </span>
+                                    </p>
+                                    <TradeViewChart pair="BNBBUSD" containerStyle={customStyle} interval='1m' /></div>
+                            </div>
                         </div>                        
                     </div>
                 </div>
@@ -83,22 +133,22 @@ const Home = (props) => {
                             <h2 className='font-OpenSansBold mb-0 LBD-status'>LBD Status</h2>
                             <div className='d-flex justify-content-between pt-3'>
                                 <p className='font-OpenSansBold mb-0'>Total LBD Supply</p>
-                                <p className='font-OpenSansBold mb-0'>851,154,292,422,656</p>
+                                <p className='mb-0'><CountUp className='font-OpenSansBold' start={0} end={851154292422656} duration={2} /></p>
                             </div>     
                             <div className='d-flex justify-content-between pt-1'>
                                 <p className='font-OpenSansBold mb-0'>Total LBD Burned</p>
-                                <p className='font-OpenSansBold mb-0'>148,845,707,577,344</p>
+                                <p className='mb-0'><CountUp className='font-OpenSansBold' start={0} end={148845707577344} duration={2} /></p>
                             </div>   
                             <div className='d-flex justify-content-between pt-1'>
                                 <p className='font-OpenSansBold mb-0'>Distributed LBD/block</p>
-                                <p className='font-OpenSansBold mb-0'>64,300,411</p>
+                                <p className='mb-0'><CountUp className='font-OpenSansBold' start={0} end={64300411} duration={2} /></p>
                             </div>                          
                         </div>                        
                     </div>
                     <div className='third-card2'>
                         <div className='card-main d-flex flex-column justify-content-end h-100'>
                             <h4 className='font-OpenSansBold mb-0 Total-value pb-3'>Total Value Locked (TVL)</h4>
-                            <h2 className='font-OpenSansBold mb-0 LBD-status pb-1'>$295190</h2>
+                            <h2 className='font-OpenSansBold mb-0 LBD-status pb-1'>$<CountUp className='font-OpenSansBold' start={0} end={295190} duration={2} /></h2>
                             <h4 className='font-OpenSansBold mb-0 title-color pb-4 pt-0'>Across all farms and pools</h4>
                         </div>                        
                     </div>

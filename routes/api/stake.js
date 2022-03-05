@@ -8,7 +8,7 @@ const { check, validationResult } = require('express-validator');
 const normalize = require('normalize-url');
 const config = require('../../config');
 const User = require('../../models/User');
-const Stack = require('../../models/Stack');
+const Stake = require('../../models/Stake');
 
 // @route    POST api/users/signUp
 // @desc     Register user
@@ -17,26 +17,23 @@ router.post(
   '/sendRequest',
   async (req, res) => {
     
-    const { userPass, stackAmount } = req.body;
+    const { userPass, stakeAmount } = req.body;
     console.log(req.body);
     try {
       let user = await User.findOne({ userPass });
-      // console.log(user);
-      const email = user.userEmail;
       var date = new Date();
       // console.log(date);
       let newDate = new Date(date.setDate(date.getDate() + 30)); 
-      let stacksOfNow = await Stack.find({ $or: [ { 'waitStatus': 1 }, { 'waitStatus': 2 }, { 'waitStatus': 3 } ] });
-      stack = new Stack({
-        stackIndex: stacksOfNow.length + 1,
-        userEmail: email,
-        stackAmount: stackAmount,
+      let stakesOfNow = await Stake.find({ $or: [ { 'waitStatus': 1 }, { 'waitStatus': 2 }, { 'waitStatus': 3 } ] });
+      stake = new Stake({
+        userPass: userPass,
+        stakeIndex: stakesOfNow.length + 1,
+        stakeAmount: stakeAmount,
         endDate : newDate,
         waitStatus : 2,
         newFlag: 0,
       });
-      // console.log(stack);
-      await stack.save();        
+      await stake.save();        
 
       res.json({msg:'success'});
     } catch (err) {
@@ -46,7 +43,7 @@ router.post(
   }
 );
 router.post(
-  '/sendUnStackRequest',
+  '/sendUnStakeRequest',
   async (req, res) => {
     
     const { userPass } = req.body;
@@ -54,7 +51,7 @@ router.post(
       let user = await User.findOne({ userPass });
       console.log(user);
       const email = user.userEmail;
-      await Stack.updateOne({'userEmail':email},{$set:{'waitStatus':3}});
+      await Stake.updateOne({'userEmail':email},{$set:{'waitStatus':3}});
       res.json({msg:'success'});
     } catch (err) {
       console.error(err.message);
@@ -63,7 +60,7 @@ router.post(
   }
 );
 router.post(
-  '/sendUnStackResponse',
+  '/sendUnStakeResponse',
   async (req, res) => {
     
     const { userPass } = req.body;
@@ -71,7 +68,7 @@ router.post(
       let user = await User.findOne({ userPass });
       console.log(user);
       const email = user.userEmail;
-      await Stack.updateOne({'userEmail':email},{$set:{'waitStatus':0}});
+      await Stake.updateOne({'userEmail':email},{$set:{'waitStatus':0}});
       res.json({msg:'success'});
     } catch (err) {
       console.error(err.message);
@@ -80,7 +77,7 @@ router.post(
   }
 );
 router.post(
-  '/sendUnStackRejectResponse',
+  '/sendUnStakeRejectResponse',
   async (req, res) => {
     
     const { userPass } = req.body;
@@ -88,7 +85,7 @@ router.post(
       let user = await User.findOne({ userPass });
       console.log(user);
       const email = user.userEmail;
-      await Stack.updateOne({'userEmail':email},{$set:{'waitStatus':2}});
+      await Stake.updateOne({'userEmail':email},{$set:{'waitStatus':2}});
       res.json({msg:'success'});
     } catch (err) {
       console.error(err.message);
@@ -103,7 +100,7 @@ router.post(
     const { id } = req.body;
     console.log(id);
     try {        
-      let stacks = await Stack.updateOne({'_id':id},{$set:{'newFlag':true}});
+      let stakes = await Stake.updateOne({'_id':id},{$set:{'newFlag':true}});
       res.json({msg:'changeNewFlag'});
     } catch (err) {
       console.error(err.message);
@@ -113,22 +110,22 @@ router.post(
 );
 
 router.get(
-  '/getStack',
+  '/getStake',
   async (req, res) => {  
       try {
-        let stacks = await Stack.find({ $or: [ { 'waitStatus': 1 }, { 'waitStatus': 2 }, { 'waitStatus': 3 } ] }).sort({ 'endDate': -1, 'newFlag': 1});        
-        console.log(stacks);
-        let nstacks = stacks.map((item) => {
+        let stakes = await Stake.find({ $or: [ { 'waitStatus': 1 }, { 'waitStatus': 2 }, { 'waitStatus': 3 } ] }).sort({ 'endDate': -1, 'newFlag': 1});        
+        console.log(stakes);
+        let nstakes = stakes.map((item) => {
           var current=Date.now()/1000; 
           var ms = Date.parse(item.endDate)/1000;
           if (current < ms && item.waitStatus !== 0) {          
-            var reward = ((30 - (ms-current) / 60 / 60 / 24) * item.stackAmount * 0.01).toFixed(3);
+            var reward = ((30 - (ms-current) / 60 / 60 / 24) * item.stakeAmount * 0.01).toFixed(3);
           }
-          console.log(reward)
+          console.log('--reward',reward)
           item = Object.assign({ reward: reward }, item);
           return item;
         })
-        res.json({stack:nstacks});
+        res.json({stake:nstakes});
       }
       catch (err) {
         console.error(err.message);
@@ -145,9 +142,9 @@ router.post(
         var date = new Date();
         console.log(date);
         let newDate = new Date(date.setDate(date.getDate() + 30)); 
-        let stacks = await Stack.updateOne({'_id':ids},{$set:{'waitStatus':changeStatus, 'endDate':newDate}});        
-        console.log(stacks);
-        res.json({stack:stacks});
+        let stakes = await Stake.updateOne({'_id':ids},{$set:{'waitStatus':changeStatus, 'endDate':newDate}});        
+        console.log(stakes);
+        res.json({stake:stakes});
       }
       catch (err) {
         console.error("err-end", err.message);
@@ -163,16 +160,17 @@ router.post(
       try {          
         user = await User.find({userPass});
         console.log(user[0].userEmail);
-        stack = await Stack.find({userEmail: user[0].userEmail});
+        stake = await Stake.find({userEmail: user[0].userEmail});
+        console.log('--stake', stake);
         var current=Date.now()/1000; 
-        var ms = Date.parse(stack[0].endDate)/1000;
-        if (current < ms && stack[0].waitStatus !== 0) {          
-          var reward = ((30 - (ms-current) / 60 / 60 / 24) * stack[0].stackAmount * 0.01).toFixed(3);
+        var ms = Date.parse(stake[0].endDate)/1000;
+        if (current < ms && stake[0].waitStatus !== 0) {          
+          var reward = ((30 - (ms-current) / 60 / 60 / 24) * stake[0].stakeAmount * 0.01).toFixed(3);
           console.log(reward);
-          res.json({stack:stack, reward:reward});
+          res.json({stake:stake, reward:reward});
         }
         else
-          res.json({msg:'noStack'});
+          res.json({msg:'noStake'});
       }
       catch (err) {
         console.error(err.message);
@@ -186,7 +184,7 @@ router.post(
   async (req, res) => {
       const { userPass } = req.body;  
       try {          
-        Stack.remove({}).then(res => {
+        Stake.remove({}).then(res => {
           console.log('success delete')
         })
         res.json({msg:'delete success'});        

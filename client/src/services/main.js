@@ -203,31 +203,31 @@ export async function apiLogin(data) {
   return await formdataquery(data, "/api/auth/login");
 }
 
-export async function apiSendStackRequest(data) {
-  return await formdataquery(data, "/api/stacks/sendRequest");
+export async function apiSendStakeRequest(data) {
+  return await formdataquery(data, "/api/stake/sendRequest");
 }
-export async function apiSendUnstackRequest(data) {
-  return await formdataquery(data, "/api/stacks/sendUnStackRequest");
+export async function apiSendUnstakeRequest(data) {
+  return await formdataquery(data, "/api/stake/sendUnStakeRequest");
 }
-export async function apiSendUnstackResponse(data) {
-  return await formdataquery(data, "/api/stacks/sendUnStackResponse");
+export async function apiSendUnstakeResponse(data) {
+  return await formdataquery(data, "/api/stake/sendUnStakeResponse");
 }
-export async function apiSendUnstackRejectResponse(data) {
-  return await formdataquery(data, "/api/stacks/sendUnStackRejectResponse");
+export async function apiSendUnstakeRejectResponse(data) {
+  return await formdataquery(data, "/api/stake/sendUnStakeRejectResponse");
 }
 
-export async function apiGetStackdata() {
-  return await rawquery("/api/stacks/getStack");
+export async function apiGetStakedata() {
+  return await rawquery("/api/stake/getStake");
 }
-export async function apiChangeStackStatus(data) {
-  return await formdataquery(data, "/api/stacks/changeStatus");
+export async function apiChangeStakeStatus(data) {
+  return await formdataquery(data, "/api/stake/changeStatus");
 }
 export async function apiChangeNewFlagStatus(data) {
-  return await formdataquery(data, "/api/stacks/changeNewFlag");
+  return await formdataquery(data, "/api/stake/changeNewFlag");
 }
 export async function apiAdminLogin(data) {
   return await formdataquery(data, "/api/admin/login");
 }
-export async function apiGetStackDataById(data) {
-  return await formdataquery(data, "/api/stacks/getById");
+export async function apiGetStakeDataById(data) {
+  return await formdataquery(data, "/api/stake/getById");
 }

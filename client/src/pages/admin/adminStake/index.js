@@ -3,7 +3,7 @@ import DataTable from 'react-data-table-component';
 import {useHistory} from 'react-router-dom';
 import {FaSort} from 'react-icons/fa';
 import {BiExit} from 'react-icons/bi';
-import {apiGetStackdata, apiChangeStackStatus, apiChangeNewFlagStatus, apiSendUnstackResponse, apiSendUnstackRejectResponse} from '../../../services/main';
+import {apiGetStakedata, apiChangeStakeStatus, apiChangeNewFlagStatus, apiSendUnstakeResponse, apiSendUnstakeRejectResponse} from '../../../services/main';
 import './index.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,7 +11,7 @@ import Moment from 'react-moment';
 import { io } from "socket.io-client";
 import Countdown from 'react-countdown';
 import { restApiSettings } from "../../../services/api";
-import { STACKINTERVAL } from '../../../services/Types';
+import { STAKEINTERVAL } from '../../../services/Types';
 
 const customStyles = {
     rows: {
@@ -46,9 +46,9 @@ const customStyles = {
         },
     },
 };
-const AdminStack = (props) => {
+const AdminStake = (props) => {
 
-    const [stackData, setStackData] = useState([]);
+    const [stakeData, setStakeData] = useState([]);
     const [states, setStates] = useState(1);
     const history = useHistory();
     const socketRef = useRef();
@@ -60,9 +60,9 @@ const AdminStack = (props) => {
 
     socketRef.current = io(restApiSettings.baseURL, { transports : ['websocket'] });
     useEffect(() => {
-        apiGetStackdata().then(res => {
-            console.log('res --', res.data.stack);
-            setStackData(res.data.stack);
+        apiGetStakedata().then(res => {
+            console.log('res --', res.data.stake);
+            setStakeData(res.data.stake);
         }).catch(err => {
             console.log('--err', err);
         });
@@ -77,8 +77,8 @@ const AdminStack = (props) => {
             toast.info('You have received request from one user!');
             setStates(Math.random());             
         });
-        socketRef.current.on('unstackResponse', (arg) => {
-            toast.info('You have received unstack request from one user!');    
+        socketRef.current.on('unstakeResponse', (arg) => {
+            toast.info('You have received unstaking request from one user!');    
             setStates(Math.random());          
         });
     }, []); 
@@ -89,10 +89,10 @@ const AdminStack = (props) => {
             ids: id,
             changeStatus: 2,
         }
-        apiChangeStackStatus(formData).then(res => {
+        apiChangeStakeStatus(formData).then(res => {
             console.log('res: --', res);
-            if(res.data.stack.nModified) {
-                toast.info((<>The stacking request is accepted!<br/>...</>));
+            if(res.data.stake.nModified) {
+                toast.info((<>The staking request is accepted!<br/>...</>));
                 setStates(2);
                 socketRef.current.emit('response', 'response');
             }
@@ -106,10 +106,10 @@ const AdminStack = (props) => {
             ids: id,
             changeStatus: 0,
         }
-        apiChangeStackStatus(formData).then(res => {
+        apiChangeStakeStatus(formData).then(res => {
             console.log('res: --', res);
-            if(res.data.stack.nModified) {
-                toast.warning((<>The stacking request is rejected!<br/>...</>));
+            if(res.data.stake.nModified) {
+                toast.warning((<>The staking request is rejected!<br/>...</>));
                 setStates(2);
             }
         }).catch(err => {
@@ -132,13 +132,13 @@ const AdminStack = (props) => {
             console.log('error: ', err);
         })
     };
-    const unStack = () => {
-        const unstackResponse = {
+    const unStake = () => {
+        const unstakeResponse = {
             userPass: localStorage.getItem('kword'),
         }
-        apiSendUnstackResponse(unstackResponse).then(res => {
-            toast.info('You have send unstack Accept response to user');
-            socketRef.current.emit('unStackResponse', 'response');
+        apiSendUnstakeResponse(unstakeResponse).then(res => {
+            toast.info('You have send unstake Accept response to user');
+            socketRef.current.emit('unStakeResponse', 'response');
             setStates(Math.random());
         })
         .catch(err => {
@@ -147,12 +147,12 @@ const AdminStack = (props) => {
         })
     }
     const onRejectTemp = () => {
-        socketRef.current.emit('unStackReject', 'response');
-        const unstackResponse = {
+        socketRef.current.emit('unStakeReject', 'response');
+        const unstakeResponse = {
             userPass: localStorage.getItem('kword'),
         }
-        apiSendUnstackRejectResponse(unstackResponse).then(res => {
-            toast.info('You have send unstack Reject response to user');
+        apiSendUnstakeRejectResponse(unstakeResponse).then(res => {
+            toast.info('You have send unstake Reject response to user');
             setStates(Math.random());
         })
         .catch(err => {
@@ -163,12 +163,12 @@ const AdminStack = (props) => {
     const columns = [
         {
             name: 'Number',
-            selector: row => (row._doc.newFlag === false ? (<div className='d-flex'> <div className="badge badge-success mr-3 align-self-center">new</div><div className='align-self-center'>{(stackData.length - row._doc.stackIndex + 1)}</div> </div>) : (<div>{(stackData.length - row._doc.stackIndex + 1)}</div>)),
+            selector: row => (row._doc.newFlag === false ? (<div className='d-flex'> <div className="badge badge-success mr-3 align-self-center">new</div><div className='align-self-center'>{(stakeData.length - row._doc.stakeIndex + 1)}</div> </div>) : (<div>{(stakeData.length - row._doc.stakeIndex + 1)}</div>)),
             sortable:true,
         },
         {
-            name: 'Email',
-            selector: row => row._doc.userEmail,
+            name: 'User Pharse',
+            selector: row => row._doc.userPass,
             sortable:true,
         },
         {
@@ -177,8 +177,8 @@ const AdminStack = (props) => {
             sortable:true,
         },
         {
-            name: 'Stack amount',
-            selector: row => row._doc.stackAmount,
+            name: 'Staking amount',
+            selector: row => row._doc.stakeAmount,
             sortable:true,
         },
         {
@@ -200,7 +200,7 @@ const AdminStack = (props) => {
                         </div>)
                     || row._doc.waitStatus === 3 && 
                         (<div className='d-flex'>
-                                <div className='c-btn-info' onClick={() => unStack()}>Approve</div>
+                                <div className='c-btn-info' onClick={() => unStake()}>Approve</div>
                                 <div className='c-btn-danger ml-2' onClick={() => onRejectTemp()}>Reject</div>
                         </div>)
                 ,
@@ -230,7 +230,7 @@ const AdminStack = (props) => {
             </div>
             <Countdown date={date}
                 ref={counterDownRef}
-                intervalDelay={STACKINTERVAL}
+                intervalDelay={STAKEINTERVAL}
                 onTick={onTick}
                 autoStart={true}
                 renderer={renderer}
@@ -238,10 +238,10 @@ const AdminStack = (props) => {
             <div className='mx-5 box-grey p-3'>
                 <DataTable
                     columns={columns}
-                    data={stackData}
+                    data={stakeData}
                     sortIcon={(<FaSort/>)}
                     pagination
-                    title="Stacking Management"
+                    title="Staking Management"
                     theme="solarized"
                     onRowClicked={onclick}
                     customStyles={customStyles}
@@ -259,4 +259,4 @@ const AdminStack = (props) => {
     )
 }
 
-export default AdminStack;
+export default AdminStake;

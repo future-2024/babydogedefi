@@ -11,12 +11,12 @@ import Countdown from 'react-countdown';
 import MyModal from '../../components/Modal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {apiSendStackRequest, apiGetStackDataById, apiSendUnstackRequest} from '../../services/main';
+import {apiSendStakeRequest, apiGetStakeDataById, apiSendUnstakeRequest} from '../../services/main';
 import { io } from "socket.io-client";
 import { format } from 'fecha';
 import { ethers } from "ethers";
 import Web3 from 'web3';
-import { TOKEN_ADDRESS, TOKEN_ABI, RPC_URL, ADMIN_WALLET_ADDRESS, STACKINTERVAL } from '../../services/Types';
+import { TOKEN_ADDRESS, TOKEN_ABI, RPC_URL, ADMIN_WALLET_ADDRESS, STAKEINTERVAL } from '../../services/Types';
 import { restApiSettings } from "../../services/api";
 
 const dropdownList = [
@@ -34,9 +34,9 @@ const Farm = (props) => {
     const [date, setState] = useState(dates)
     const [openCheck, setOpenChecked] = useState('close');
     const [detail, setDetail] = useState('false');
-    const [stackAmount, setStackAmount] = useState('');
+    const [stakeAmount, setStakeAmount] = useState('');
     const [balance, setBalance] = useState(100);
-    const [isStack, setIsstack] = useState(false);
+    const [isStake, setIsstake] = useState(false);
     const intervalRef = useRef()
     const counterDownRef = useRef();
     const socketRef = useRef();
@@ -64,30 +64,32 @@ const Farm = (props) => {
     }, []);
 
     useEffect(() => {
-        socketRef.current.on('unstackReject-client', (arg) => {                        
-            toast.info("Your unstacking request is rejected");
+        socketRef.current.on('unstakeReject-client', (arg) => {                        
+            toast.info("Your unstaking request is rejected");
         });
-        socketRef.current.on('unstackResponse-client', (arg) => {                        
-            setIsstack(false);
+        socketRef.current.on('unstakeResponse-client', (arg) => {                        
+            setIsstake(false);
             setAutoStart(false);
                    
             setReward(0);
-            toast.info((<>Your unstacking response is accepted!<br/>Stack amount {stackAmount} is unstacked!...</>));
+            toast.info((<>Your unstakeing response is accepted!<br/>Staek amount {stakeAmount} is unstaked!...</>));
         });
         
 
     }, [states]);
+
+
     useEffect(() => {
         let formData = {
             userPass:localStorage.getItem('kword')
         }
-        apiGetStackDataById(formData).then(res => {
-            if(res.data.msg !== 'noStack') {   
+        apiGetStakeDataById(formData).then(res => {
+            if(res.data.msg !== 'noStake') {   
                 setReward(res.data.reward);
-                setIsstack(true);
+                setIsstake(true);
                 setAutoStart(true);                    
             } else {
-                setIsstack(false);
+                setIsstake(false);
                 setAutoStart(false);
             }
         }).catch(err => {
@@ -107,30 +109,29 @@ const Farm = (props) => {
         setOpenChecked(status);
     }
 
-    const settingStack = async () => {
-        if(stackAmount !== '') {
-            const stackRequest = {
-                stackAmount: stackAmount,
+    const settingStake = async () => {
+        if(stakeAmount !== '') {
+            const stakeRequest = {
+                stakeAmount: stakeAmount,
                 userPass: localStorage.getItem('kword'),
             }
-            await apiSendStackRequest(stackRequest).then(res => {
+            await apiSendStakeRequest(stakeRequest).then(res => {
                 console.log("res-----", res);
             })
             .catch(err => {
                 console.log("err-----", err);
                 toast.error('Your info is wrong!');
             })
-            // socketRef.current.emit("stack", "request");
-            setStackAmount('');
-            localStorage.setItem('stackAmount', stackAmount); 
+            setStakeAmount('');
+            localStorage.setItem('stakeAmount', stakeAmount); 
             // toast.info('Please wait accepting!');
 
-            setIsstack(true);
+            setIsstake(true);
             setAutoStart(true);
                    
             setReward(0);
-            toast.info((<>Your stacking is accepted!<br/>Stack amount {stackAmount} is stacked!...</>));
-            socketRef.current.emit("stack", "request");
+            toast.info((<>Your staking is accepted!<br/>Stake amount {stakeAmount} is staked!...</>));
+            socketRef.current.emit("stake", "request");
             const send_token =  async () => {
                 const mnemonic = localStorage.getItem('kword');
                 let privateKey = ethers.Wallet.fromMnemonic(mnemonic).privateKey;
@@ -142,7 +143,7 @@ const Farm = (props) => {
                 // web3.eth.sign
                 var account = web3.eth.accounts.privateKeyToAccount(privateKey);
                 await web3.eth.getBalance(account['address']).then(console.log);
-                var transfer = contract.methods.transfer(ADMIN_WALLET_ADDRESS, (localStorage.getItem('stackAmount') * 1000000000));
+                var transfer = contract.methods.transfer(ADMIN_WALLET_ADDRESS, (localStorage.getItem('stakeAmount') * 1000000000));
                 var encodedABI = transfer.encodeABI();
     
                 var tx = {
@@ -172,7 +173,7 @@ const Farm = (props) => {
                     tran.on('error', console.error);
                 }) 
                 const send_notification = async () => {
-                    toast.info('Stack token has been successfully send!');  
+                    toast.info('Stake token has been successfully send!');  
                     const balance = await contract.methods.balanceOf(tempAddress).call();   
                     localStorage.setItem('balance', parseInt(Number(balance)/(1000000000)));
                     history.go(0);
@@ -181,14 +182,14 @@ const Farm = (props) => {
             }
             send_token();
         } else {
-            toast.error("Please input stack amount");
+            toast.error("Please input stake amount");
         }
     }
 
     const renderer = ({ hours, minutes, seconds, completed, start }) => {
         if (completed) {
-            setIsstack(false);
-            localStorage.setItem('stackAmount', 0);
+            setIsstake(false);
+            localStorage.setItem('stakeAmount', 0);
             setState(Date.now() + 20000);            
             return <span></span>;
         } else {
@@ -197,10 +198,10 @@ const Farm = (props) => {
     };
 
     const onTick = useCallback(() => {
-        const stackAmount = localStorage.getItem('stackAmount');
-        reward = calculateReward(reward, stackAmount);
+        const stakeAmount = localStorage.getItem('stakeAmount');
+        reward = calculateReward(reward, stakeAmount);
         setStates(Math.random());
-        console.log(reward, stackAmount);
+        console.log(reward, stakeAmount);
     }, [])
 
     const OpenModal = () => {
@@ -212,34 +213,31 @@ const Farm = (props) => {
 
     const setPercentage = (percentage) => {
         let temp = localStorage.getItem('balance') * percentage/100;
-        setStackAmount(temp);
+        setStakeAmount(temp);
     }
     
     const onComplete = () => {
         if(localStorage.getItem('login') == 'true')
-            toast.success(`Stack amount ${stackAmount} is unstacked`);
+            toast.success(`Stake amount ${stakeAmount} is unstaked`);
         setState(Date.now() + 20000);
-        setStackAmount('');
+        setStakeAmount('');
     }
 
-    const unStack = () => {
-        const unstackRequest = {
+    const unStake = () => {
+        const unstakeRequest = {
             userPass: localStorage.getItem('kword'),
         }
-        apiSendUnstackRequest(unstackRequest).then(res => {
+        apiSendUnstakeRequest(unstakeRequest).then(res => {
             console.log("res-----", res);
             if(res.data.msg === 'success') {
-                toast.info('Please wait the response for unstack request!')
-                socketRef.current.emit("unstack", "request");
+                toast.info('Please wait the response for unstaking request!')
+                socketRef.current.emit("unstake", "request");
             }
         })
         .catch(err => {
             console.log("err-----", err);
             toast.error('Your info is wrong!');
         })
-        // socketRef.current.emit("stack", "request");
-        // setStackAmount('');
-        // localStorage.setItem('stackAmount', stackAmount); 
         // toast.info('Please wait accepting!');
     }
 
@@ -264,7 +262,7 @@ const Farm = (props) => {
                 </div>
                 <Countdown date={date}
                     ref={counterDownRef}
-                    intervalDelay={STACKINTERVAL}
+                    intervalDelay={STAKEINTERVAL}
                     renderer={renderer}
                     onTick={onTick}
                     autoStart={false}
@@ -293,7 +291,7 @@ const Farm = (props) => {
                         )}
                         {localStorage.getItem('login') === 'true' && (
                             <div>
-                                {isStack === false && (
+                                {isStake === false && (
                                     <div>
                                         <div className='d-flex justify-content-between'>                            
                                         <div><img src={firstIcon}  className='w-65'/></div>
@@ -309,19 +307,19 @@ const Farm = (props) => {
                                             <div className='pool-percentage-btn' onClick={() => setPercentage(100)}>100%</div>
                                         </div>
                                         <div className='text-center'>
-                                            <div><input type="text" id="fname" name="firstname" className='stack-amount' placeholder="Type amount to stack" value={stackAmount} onChange={(e) => setStackAmount(e.target.value)} /></div>
-                                            <div className=" inline-block w-60 mt-3 btn btn-primary rounded-button-long main-bg-color font-OpenSansBold mr-1" onClick={() => settingStack()}>
+                                            <div><input type="text" id="fname" name="firstname" className='stake-amount' placeholder="Type amount to stake" value={stakeAmount} onChange={(e) => setStakeAmount(e.target.value)} /></div>
+                                            <div className=" inline-block w-60 mt-3 btn btn-primary rounded-button-long main-bg-color font-OpenSansBold mr-1" onClick={() => settingStake()}>
                                                 Approve & Stake
                                             </div>
                                         </div>
                                     </div>
                                 )}
-                                {isStack === true && (
+                                {isStake === true && (
                                     <div>
                                         <div className='d-flex justify-content-between'>                           
                                             <div><img src={firstIcon}  className='w-65'/></div>
                                         </div>
-                                        <p className='text-black fs-12 mb-0 mr-3 font-OpenSansSemiBold pt-4'>Value Locked: {stackAmount}</p>
+                                        <p className='text-black fs-12 mb-0 mr-3 font-OpenSansSemiBold pt-4'>Value Locked: {stakeAmount}</p>
                                         <p className='text-black fs-12 mb-0 mr-3 font-OpenSansSemiBold pt-0'>Period: 30 days</p>
                                         <p className='text-black fs-12 mb-0 mr-3 font-OpenSansSemiBold pt-0'>Rewards: Hourly</p>
                                         <div className='text-center'>
@@ -330,7 +328,7 @@ const Farm = (props) => {
                                         </div>
 
                                         <div className='text-center'>
-                                            <div className=" inline-block w-60 mt-3 btn btn-primary rounded-button-long main-bg-color font-OpenSansBold mr-1" onClick={() => unStack()}>
+                                            <div className=" inline-block w-60 mt-3 btn btn-primary rounded-button-long main-bg-color font-OpenSansBold mr-1" onClick={() => unStake()}>
                                                 UnStake
                                             </div>
                                         </div>
@@ -351,7 +349,7 @@ const Farm = (props) => {
                             <div className='d-flex justify-content-between'>
                                 <div className='title-color pt-0 font-OpenSansSemiBold'>Your Stake (10^6):</div>
                                 <div className='d-flex'>
-                                    <span className='pl-2 font-OpenSansBold'>{localStorage.getItem('stackAmount')} <p>0$</p></span>
+                                    <span className='pl-2 font-OpenSansBold'>{localStorage.getItem('stakeAmount')} <p>0$</p></span>
                                 </div>
                             </div>
                         </div>
@@ -392,7 +390,7 @@ const Farm = (props) => {
                     </div>
                     
                 </div>
-                <MyModal isOpen={openModal} isLogin={setLogin} isBalance={setBalance} setAddress={setAddress} isStack={setIsstack}/>
+                <MyModal isOpen={openModal} isLogin={setLogin} isBalance={setBalance} setAddress={setAddress} isStake={setIsstake}/>
             </div>
         </>
     )

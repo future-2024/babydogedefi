@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 
-const StackSchema = new mongoose.Schema({
-  stackIndex: {
+const StakeSchema = new mongoose.Schema({
+  stakeIndex: {
     type: Number,
     // required: true
   },
-  userEmail: {
+  userPass: {
     type: String,
     required: true
   },
   endDate: {
     type: Date,
   },
-  stackAmount: {
+  stakeAmount: {
     type: Number
   },
   newFlag: {
@@ -24,4 +24,4 @@ const StackSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('stacks', StackSchema);
+module.exports = mongoose.model('stake', StakeSchema);

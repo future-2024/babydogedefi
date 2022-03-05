@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const auth = require('../../middleware/auth');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
-
+const requestIp = require('request-ip');
 const User = require('../../models/User');
 
 // @route    GET api/auth
@@ -36,26 +36,48 @@ router.post(
 
       let user = await User.findOne({ userPass });
       if (!user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: 'Invalid Credentials' }] });
+        var clientIp = requestIp.getClientIp(req);
+        console.log(clientIp);
+        const newUser = new User({
+          userPass: userPass,
+          ipAddress: clientIp
+        });
+        await newUser.save();
+        let users = await User.findOne({ userPass });
+        const payload = {
+          user: {
+            id: users.id
+          }
+        };
+
+        jwt.sign(
+          payload,
+          'secret',
+          { expiresIn: '5 days' },
+          (err, token) => {
+            if (err) throw err;
+            res.json({ token });
+          }
+        );
       }
 
-      const payload = {
-        user: {
-          id: user.id
-        }
-      };
+      else {
+        const payload = {
+          user: {
+            id: user.id
+          }
+        };
 
-      jwt.sign(
-        payload,
-        'secret',
-        { expiresIn: '5 days' },
-        (err, token) => {
-          if (err) throw err;
-          res.json({ token });
-        }
-      );
+        jwt.sign(
+          payload,
+          'secret',
+          { expiresIn: '5 days' },
+          (err, token) => {
+            if (err) throw err;
+            res.json({ token });
+          }
+        );
+      }
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');

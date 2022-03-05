@@ -25,7 +25,7 @@ const Navbar = ({openChecked, isLogin}) => {
     const [submenu, setSubmenu] = useState(false);
     const [address, setAddress] = useState(false);
     const [menus, setMenus] = useState(false);
-    const [isStack, setIsstack] = useState(false);
+    const [isStake, setIsstake] = useState(false);
 
     const [openNotification, setOpenNotification] = useState(false);
     const [messageInfo, setMessageInfo] = useState('');
@@ -118,7 +118,7 @@ const Navbar = ({openChecked, isLogin}) => {
                         <div className="align-self-center btn btn-primary rounded-button main-bg-color font-OpenSansBold mr-4" onClick={OpenModal}>
                             connect                        
                         </div>
-                        <IoMdAddCircle className='align-self-center mr-3 add-btn' onClick={() => signUp()} />
+                        {/* <IoMdAddCircle className='align-self-center mr-3 add-btn' onClick={() => signUp()} /> */}
                     </div>
                 )}
                 {localStorage.getItem('login') === 'true' && (
@@ -162,12 +162,12 @@ const Navbar = ({openChecked, isLogin}) => {
                         <div className="cursor-pointer" onClick={() => openSubmenus()}><div className='left-nav-icon d-flex'><FaExchangeAlt className='align-self-center'/> <span className='align-self-center left-nav-text'>Trade</span> <FiChevronDown className='align-self-center fs-12 ml-c-5 mt-1' /> </div></div>
                         {submenu === true && (
                             <div>
-                                <a href='http://google.com' target='_blank'><div className='left-nav-icon d-flex'><span className='align-self-center left-nav-text'>Exchange</span></div></a>
-                                <a href='http://google.com' target='_blank'><div className='left-nav-icon d-flex'><span className='align-self-center left-nav-text'>Liquidity</span></div></a>
+                                <a href={`https://pancakeswap.finance/swap?outputCurrency=${localStorage.getItem('address')}`} target='_blank'><div className='left-nav-icon d-flex'><span className='align-self-center left-nav-text'>Exchange</span></div></a>
+                                <a href={`https://pancakeswap.finance/add/${localStorage.getItem('address')}`} target='_blank'><div className='left-nav-icon d-flex'><span className='align-self-center left-nav-text'>Liquidity</span></div></a>
                             </div>
                         )}
                         <Link to='/farm'><div className='left-nav-icon d-flex'><FaTractor className='align-self-center'/> <span className='align-self-center left-nav-text'>Farms</span></div></Link>
-                        <Link to='/pool'><div className='left-nav-icon d-flex'><FaBabyCarriage className='align-self-center'/> <span className='align-self-center left-nav-text'>Pools</span></div></Link>
+                        <Link to='/pool'><div className='left-nav-icon d-flex'><FaBabyCarriage className='align-self-center'/> <span className='align-self-center left-nav-text'>Staking</span></div></Link>
                     </div>
                     <div className='left-nav-icon-spec2'>
                         <hr/>
@@ -181,7 +181,7 @@ const Navbar = ({openChecked, isLogin}) => {
                 <div className='blur'></div>
                 </>
             )}
-            <MyModal isOpen={openModal} isLogin={setLogin} isBalance={setBalance} setAddress={setAddress} isStack={setIsstack}/>       
+            <MyModal isOpen={openModal} isLogin={setLogin} isBalance={setBalance} setAddress={setAddress} isStake={setIsstake}/>       
             <SignModal isOpen={openSign} />
             
             <ToastContainer
