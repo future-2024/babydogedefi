@@ -84,7 +84,7 @@ const AdminStake = (props) => {
     }, []); 
 
     const onAccept = (id, userEmail) => {
-        window.confirm("Are you really accept him/her?")
+        window.confirm("Do you really want to accept?")
         const formData = {
             ids: id,
             changeStatus: 2,
@@ -92,7 +92,7 @@ const AdminStake = (props) => {
         apiChangeStakeStatus(formData).then(res => {
             console.log('res: --', res);
             if(res.data.stake.nModified) {
-                toast.info((<>The staking request is accepted!<br/>...</>));
+                toast.info((<>Staking Request has been approved!<br/>...</>));
                 setStates(2);
                 socketRef.current.emit('response', 'response');
             }
@@ -101,7 +101,7 @@ const AdminStake = (props) => {
         });
     }
     const onReject = (id) => {
-        window.confirm("Are you really reject him/her?")
+        window.confirm("Do you really want to reject?")
         const formData = {
             ids: id,
             changeStatus: 0,
