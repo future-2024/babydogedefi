@@ -31,7 +31,7 @@ a {
 }
 
 .second-card1 {
-    height: 400px;
+    height: 430px;
     width: 45%;
     background-color: white;
     margin: 30px 20px;
@@ -43,7 +43,7 @@ a {
     min-height: 340px;
 }
 .second-card2 {
-    height: 400px;
+    height: 430px;
     width: 45%;
     background-color: white;
     margin: 30px 20px;
@@ -151,7 +151,7 @@ a {
 }
 @media only screen and (max-width: 1300px) {
     .second-card1 {
-        height: 400px;
+        height: 430px;
         width: 50%;
         background-color: white;
         margin: 30px 20px;
@@ -162,7 +162,7 @@ a {
         min-width: 364px;
     }
     .second-card2 {
-        height: 400px;
+        height:814px;
         width: 50%;
         background-color: white;
         margin: 30px 20px;

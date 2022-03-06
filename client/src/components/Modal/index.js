@@ -5,7 +5,7 @@ import { FaAlignJustify, FaHome, FaTractor, FaBabyCarriage, FaSteam, FaOutdent,
     FaShareSquare, FaTwitter, FaArrowRight, FaClosedCaptioning, FaTimes, FaQuestion, FaQuestionCircle} from 'react-icons/fa';
 import MetaMask from '../../img/quotation/metamask.svg';
 import Bnbwallet from '../../img/quotation/bnb-busd.svg';
-import MathWallet from '../../img/quotation/pan-bg.svg';
+import Trustwallet from '../../img/quotation/TWT.png';
 import './index.css';
 import Modal from 'react-modal';
 import { ethers } from "ethers";
@@ -22,7 +22,8 @@ const customStyles = {
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      borderRadius:'25px'
+      borderRadius:'25px',
+      zIndex: 5000,
     },
     overlay: {
         background: "rgba(69, 42, 122, 0.6)"
@@ -130,12 +131,12 @@ const MyModal = ({isOpen, isLogin, isBalance, setAddress, isStake}) => {
                             <img src={MetaMask} width={35}></img>
                         </div>
                         <div className='d-flex justify-content-between w-245 list-wallet cursor-pointer' onClick={() => setStep(2)}>
-                            <p className='align-self-center mb-0 title-color pt-0'>TrustWallet</p>
+                            <p className='align-self-center mb-0 title-color pt-0'>Binance Chain Wallet</p>
                             <img src={Bnbwallet} width={35}></img>
                         </div>
                         <div className='d-flex justify-content-between w-245 list-wallet cursor-pointer' onClick={() => setStep(2)}>
-                            <p className='align-self-center mb-0 title-color pt-0'>MathWallet</p>
-                            <img src={MathWallet} width={35}></img>
+                            <p className='align-self-center mb-0 title-color pt-0'>Trust Wallet</p>
+                            <img src={Trustwallet} width={35}></img>
                         </div>
                     </>
                 )}

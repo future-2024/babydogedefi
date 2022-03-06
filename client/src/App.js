@@ -32,7 +32,6 @@ function App() {
         <Route path="/home" exact component={Home} />
         <Route path="/farm" exact component={Farm} />
         <Route path="/pool" exact component={Pool} />
-        {/* <Redirect from="/admin" exact to={AdminLogin} /> */}
         <Route path="/admin/stake" exact component={AdminStake} />
         <Route path="/admin/login" exact component={AdminLogin} />
       </Switch>

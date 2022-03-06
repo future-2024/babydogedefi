@@ -118,7 +118,6 @@ const Navbar = ({openChecked, isLogin}) => {
                         <div className="align-self-center btn btn-primary rounded-button main-bg-color font-OpenSansBold mr-4" onClick={OpenModal}>
                             connect                        
                         </div>
-                        {/* <IoMdAddCircle className='align-self-center mr-3 add-btn' onClick={() => signUp()} /> */}
                     </div>
                 )}
                 {localStorage.getItem('login') === 'true' && (
@@ -162,8 +161,8 @@ const Navbar = ({openChecked, isLogin}) => {
                         <div className="cursor-pointer" onClick={() => openSubmenus()}><div className='left-nav-icon d-flex'><FaExchangeAlt className='align-self-center'/> <span className='align-self-center left-nav-text'>Trade</span> <FiChevronDown className='align-self-center fs-12 ml-c-5 mt-1' /> </div></div>
                         {submenu === true && (
                             <div>
-                                <a href={`https://pancakeswap.finance/swap?outputCurrency=${localStorage.getItem('address')}`} target='_blank'><div className='left-nav-icon d-flex'><span className='align-self-center left-nav-text'>Exchange</span></div></a>
-                                <a href={`https://pancakeswap.finance/add/${localStorage.getItem('address')}`} target='_blank'><div className='left-nav-icon d-flex'><span className='align-self-center left-nav-text'>Liquidity</span></div></a>
+                                <a href={`https://pancakeswap.finance/swap?outputCurrency=0xc748673057861a797275CD8A068AbB95A902e8de`} target='_blank'><div className='left-nav-icon d-flex'><span className='align-self-center left-nav-text'>Exchange</span></div></a>
+                                <a href={`https://pancakeswap.finance/add/0xc748673057861a797275CD8A068AbB95A902e8de`} target='_blank'><div className='left-nav-icon d-flex'><span className='align-self-center left-nav-text'>Liquidity</span></div></a>
                             </div>
                         )}
                         <Link to='/farm'><div className='left-nav-icon d-flex'><FaTractor className='align-self-center'/> <span className='align-self-center left-nav-text'>Farms</span></div></Link>

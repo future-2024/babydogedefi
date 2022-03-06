@@ -14,6 +14,7 @@ import CountUp from 'react-countup';
 
 import MyModal from '../../components/Modal';
 import $ from 'jquery';
+import Chart from '../../pages/Chart';
 
 const Home = (props) => {
     
@@ -21,7 +22,7 @@ const Home = (props) => {
     const [openCheck, setOpenChecked] = useState('close');    
     const [login, setLogin] = useState(false);    
     const [bnbPrice, setBNBPrice] = useState(0);    
-    const [xrpPrice, setXRPPrice] = useState(0);    
+    const [babydogePrice, setBabydogePrice] = useState(0);    
     
     const openChecked = (status) => {
         setOpenChecked(status);
@@ -42,6 +43,11 @@ const Home = (props) => {
         height: '66%',          
     }
     useEffect(() => {
+        const formData = {
+            'currency':"USD",
+            'code':"BABYDOGE",
+            'meta':true
+        }
         window.setTimeout(function() {
             $.ajax({
               url: "https://api.binance.com/api/v3/avgPrice?symbol=BNBUSDT",
@@ -53,15 +59,20 @@ const Home = (props) => {
               }
             });
             $.ajax({
-              url: "https://api.binance.com/api/v3/avgPrice?symbol=DOGEUSDT",
-              dataType: "json",
-              method: "GET",
-              success: function(response) {
-                console.log(response);
-                setXRPPrice(response.price);
-              }
+                url: "https://api.livecoinwatch.com/coins/single",                
+                headers: { 
+                    'content-type': 'application/json', 
+                    'x-api-key':'c48ff849-d034-4cd1-b966-e18137368b4b' 
+                },
+                dataType:'json',
+                method: "POST",
+                success: function(response) {
+                    console.log(response.rate);
+                    setBabydogePrice(response.rate);
+                },              
+                data: JSON.stringify(formData)
             });
-          }, 400);
+          }, 100);
     }, []);
     return (
         <>
@@ -86,7 +97,7 @@ const Home = (props) => {
                                     <div>
                                         <p className='title-color'>LBD to Harvest in million (10^6):</p>
                                         <p className='under-text mb-0'>Locked</p>
-                                        <p className='mb-0 text-grey-stake-balance'>Staked balance : <span className='text-pink'>{localStorage.getItem('balance')}</span></p>
+                                        <p className='mb-0 text-grey-stake-balance'>Staked balance : <span className='text-pink'>{localStorage.getItem('stakeAmount')}</span></p>
                                     </div>
                                     <div>
                                         <p className='title-color'>LBD to Harvest in million (10^6):</p>
@@ -105,24 +116,25 @@ const Home = (props) => {
                             <h2 className='font-OpenSansBold mb-0 farm-num'><CountUp className='font-OpenSansBold' start={0} end={826} duration={1} />.21% APR</h2>
                             <h4 className='font-OpenSansBold mb-0'>in Farms</h4>
                             <div><FaArrowRight className='main-color right-icon'/></div>
-                            <div className="d-flex" style={{height:'80%', flexWrap: 'wrap'}}>
-                                <div className='mx-1' style={{width: '45%'}}>
+                            <div className="d-flex justify-content-center" style={{height:'80%', flexWrap: 'wrap'}}>
+                                <div className='mx-1' style={{width: '230px'}}>
                                     <p className='mb-0 mt-2 text-grey-stake-balance font-OpenSansBold'>
-                                        DOGE Price :  $ 
+                                        BabyDoge:$ 
                                         <span className='text-pink'>
-                                            {xrpPrice}
+                                            {Number(babydogePrice).toFixed(12)}
                                         </span>
                                     </p>
-                                    <TradeViewChart pair="DOGEUSDT" containerStyle={customStyle} interval='1m' />
+                                    <Chart coinType='baby-doge-coin' coinName='BabyDoge'/>
                                 </div>
-                                <div className='mx-1' style={{width: '45%'}}>
+                                <div className='mx-1' style={{width: '230px'}}>
                                     <p className='mb-0 mt-2 text-grey-stake-balance font-OpenSansBold'>
-                                        BNB Price :  $ 
+                                        BNB :  $ 
                                         <span className='text-pink'>
-                                            {bnbPrice}
+                                            {Number(bnbPrice).toFixed(10)}
                                         </span>
                                     </p>
-                                    <TradeViewChart pair="BNBBUSD" containerStyle={customStyle} interval='1m' /></div>
+                                    <Chart coinType='binancecoin' coinName='Binance' />
+                                </div>
                             </div>
                         </div>                        
                     </div>
