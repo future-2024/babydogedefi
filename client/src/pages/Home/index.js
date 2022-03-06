@@ -89,22 +89,23 @@ const Home = (props) => {
                 </div>
                 <div className='d-flex medium-section justify-content-center flex-wrap'>
                     <div className='second-card1'>
-                        <div className='card-main'>
+                        <div className='card-main' style={{padding: '70px 30px'}}>
                             <div><h1 className='font-OpenSansBold card-main-title'>Farms & Staking</h1></div>
                             <div className='d-flex justify-content-between'>
                                 <div>
                                     <div><img src={logo_short}  className='w-24-2'/></div>
                                     <div>
-                                        <p className='title-color'>LBD to Harvest in million (10^6):</p>
+                                        <p className='title-color'>Staked BabyDoge:</p>
                                         <p className='under-text mb-0'>Locked</p>
-                                        <p className='mb-0 text-grey-stake-balance'>Staked balance : <span className='text-pink'>{localStorage.getItem('stakeAmount')}</span></p>
+                                        <p className='mb-0 text-grey-stake-balance'>Staked: <span className='text-pink'>{localStorage.getItem('stakeAmount')}</span></p>
                                     </div>
                                     <div>
-                                        <p className='title-color'>LBD to Harvest in million (10^6):</p>
+                                        <p className='title-color'>BabyDoge to Stake in million (10^6):</p>
                                         <p className='under-text mb-0'>Locked</p>
                                     </div>
                                 </div>                                
                             </div>
+                            
                             <div className="w-100 align-self-center btn btn-primary rounded-button-long main-bg-color font-OpenSansBold mr-4 mt-2" onClick={() => OpenModal()}>
                                 Unlock Wallet
                             </div>
@@ -119,7 +120,7 @@ const Home = (props) => {
                             <div className="d-flex justify-content-center" style={{height:'80%', flexWrap: 'wrap'}}>
                                 <div className='mx-1' style={{width: '230px'}}>
                                     <p className='mb-0 mt-2 text-grey-stake-balance font-OpenSansBold'>
-                                        BabyDoge:$ 
+                                        BabyDoge: $ 
                                         <span className='text-pink'>
                                             {Number(babydogePrice).toFixed(12)}
                                         </span>
@@ -128,7 +129,7 @@ const Home = (props) => {
                                 </div>
                                 <div className='mx-1' style={{width: '230px'}}>
                                     <p className='mb-0 mt-2 text-grey-stake-balance font-OpenSansBold'>
-                                        BNB :  $ 
+                                        BNB: $ 
                                         <span className='text-pink'>
                                             {Number(bnbPrice).toFixed(10)}
                                         </span>
