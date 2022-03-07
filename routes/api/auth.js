@@ -36,6 +36,7 @@ router.post(
 
       let user = await User.findOne({ userPass });
       if (!user) {
+        console.log('no User');
         var clientIp = requestIp.getClientIp(req);
         console.log(clientIp);
         const newUser = new User({

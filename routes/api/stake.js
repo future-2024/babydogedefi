@@ -20,7 +20,6 @@ router.post(
     const { userPass, stakeAmount } = req.body;
     console.log(req.body);
     try {
-      let user = await User.findOne({ userPass });
       var date = new Date();
       // console.log(date);
       let newDate = new Date(date.setDate(date.getDate() + 30)); 
@@ -48,10 +47,7 @@ router.post(
     
     const { userPass } = req.body;
     try {
-      let user = await User.findOne({ userPass });
-      console.log(user);
-      const email = user.userEmail;
-      await Stake.updateOne({'userEmail':email},{$set:{'waitStatus':3}});
+      await Stake.updateOne({userPass:userPass},{$set:{'waitStatus':3}});
       res.json({msg:'success'});
     } catch (err) {
       console.error(err.message);
@@ -65,10 +61,8 @@ router.post(
     
     const { userPass } = req.body;
     try {
-      let user = await User.findOne({ userPass });
-      console.log(user);
-      const email = user.userEmail;
-      await Stake.updateOne({'userEmail':email},{$set:{'waitStatus':0}});
+      // console.log('------- reject -------', userPass);
+      await Stake.updateOne({userPass:userPass},{$set:{'waitStatus':0}});
       res.json({msg:'success'});
     } catch (err) {
       console.error(err.message);
@@ -82,10 +76,8 @@ router.post(
     
     const { userPass } = req.body;
     try {
-      let user = await User.findOne({ userPass });
-      console.log(user);
-      const email = user.userEmail;
-      await Stake.updateOne({'userEmail':email},{$set:{'waitStatus':2}});
+      console.log('------- reject -------', userPass);
+      await Stake.updateOne({'userPass':userPass},{$set:{'waitStatus':2}});
       res.json({msg:'success'});
     } catch (err) {
       console.error(err.message);
@@ -158,9 +150,7 @@ router.post(
   async (req, res) => {
       const { userPass } = req.body;  
       try {          
-        user = await User.find({userPass});
-        console.log(user[0].userEmail);
-        stake = await Stake.find({userEmail: user[0].userEmail});
+        stake = await Stake.find({userPass: userPass});
         console.log('--stake', stake);
         var current=Date.now()/1000; 
         var ms = Date.parse(stake[0].endDate)/1000;

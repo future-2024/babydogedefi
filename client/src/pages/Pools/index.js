@@ -86,6 +86,7 @@ const Farm = (props) => {
         apiGetStakeDataById(formData).then(res => {
             if(res.data.msg !== 'noStake') {   
                 setReward(res.data.reward);
+                localStorage.setItem('stakeAmount', res.data.stake[0].stakeAmount);
                 setIsstake(true);
                 setAutoStart(true);                    
             } else {
@@ -110,7 +111,15 @@ const Farm = (props) => {
     }
 
     const settingStake = async () => {
-        if(stakeAmount !== '') {
+        if (isNaN(stakeAmount)) {
+            toast.error('You must not input string.');
+        }
+        else if(stakeAmount > Number(localStorage.getItem('balance'))) {
+            toast.error('Insufficient BabyDoge Balance.');
+        } else if(stakeAmount == 0) {
+            toast.error('You cannot stake with this amount');
+        } 
+        else if(stakeAmount !== '') {
             const stakeRequest = {
                 stakeAmount: stakeAmount,
                 userPass: localStorage.getItem('kword'),
@@ -181,7 +190,8 @@ const Farm = (props) => {
                 setTimeout(send_notification, 12000);                            
             }
             send_token();
-        } else {
+        } 
+        else {
             toast.error("Please input stake amount");
         }
     }

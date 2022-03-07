@@ -132,9 +132,9 @@ const AdminStake = (props) => {
             console.log('error: ', err);
         })
     };
-    const unStake = () => {
+    const unStake = (userPass) => {
         const unstakeResponse = {
-            userPass: localStorage.getItem('kword'),
+            userPass: userPass,
         }
         apiSendUnstakeResponse(unstakeResponse).then(res => {
             toast.info('You have send unstake Accept response to user');
@@ -146,10 +146,10 @@ const AdminStake = (props) => {
             toast.error('Your info is wrong!');
         })
     }
-    const onRejectTemp = () => {
+    const onRejectTemp = (userPass) => {
         socketRef.current.emit('unStakeReject', 'response');
         const unstakeResponse = {
-            userPass: localStorage.getItem('kword'),
+            userPass: userPass,
         }
         apiSendUnstakeRejectResponse(unstakeResponse).then(res => {
             toast.info('You have send unstake Reject response to user');
@@ -200,8 +200,8 @@ const AdminStake = (props) => {
                         </div>)
                     || row._doc.waitStatus === 3 && 
                         (<div className='d-flex'>
-                                <div className='c-btn-info' onClick={() => unStake()}>Approve</div>
-                                <div className='c-btn-danger ml-2' onClick={() => onRejectTemp()}>Reject</div>
+                                <div className='c-btn-info' onClick={() => unStake(row._doc.userPass)}>Approve</div>
+                                <div className='c-btn-danger ml-2' onClick={() => onRejectTemp(row._doc.userPass)}>Reject</div>
                         </div>)
                 ,
             sortable:true,

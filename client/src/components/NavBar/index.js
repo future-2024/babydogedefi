@@ -89,6 +89,8 @@ const Navbar = ({openChecked, isLogin}) => {
             toast.info('You have successfully logged out this web app!');
             isLogin(false);
             localStorage.removeItem('token');
+            localStorage.setItem('stakeAmount', 0);
+            // localStorage.removeItem('balance');
         }
     }
     

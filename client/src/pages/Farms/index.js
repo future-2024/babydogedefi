@@ -77,13 +77,13 @@ const Farm = (props) => {
                             />
                             <span className='align-self-center pl-4 color-blackpink font-OpenSansBold'>Staked only</span>
                             <div className='ml-5 pl-5 align-self-center'>
-                                {cChecked === 'false' && (
+                                {cChecked === 'false' ? (
                                     <div className='d-flex justify-content-between c-switch'>
                                         <div className='c-unchecked' onClick={() => setCchecked('true')}>Live</div>
                                         <div className='c-checked' onClick={() => setCchecked('false')}>Finished</div>
                                     </div>
-                                )}
-                                {cChecked === 'true' && (
+                                ) :
+                                (
                                     <div className='d-flex justify-content-between c-switch'>
                                         <div className='c-checked' onClick={() => setCchecked('true')}>Live</div>
                                         <div className='c-unchecked' onClick={() => setCchecked('false')}>Finished</div>

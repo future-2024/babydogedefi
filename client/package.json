@@ -1,7 +1,7 @@
 {
   "name": "babydogeapp",
   "version": "0.1.0",
-  "homepage": "https://apptest123.com/",
+  "homepage": "https://babydogedefi.io/",
   "private": true,
   "dependencies": {
     "@metamask/detect-provider": "^1.2.0",
