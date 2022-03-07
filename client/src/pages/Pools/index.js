@@ -65,14 +65,14 @@ const Farm = (props) => {
 
     useEffect(() => {
         socketRef.current.on('unstakeReject-client', (arg) => {                        
-            toast.info("Your unstaking request is rejected");
+            toast.info("Your unstaking request has been rejected");
         });
         socketRef.current.on('unstakeResponse-client', (arg) => {                        
             setIsstake(false);
             setAutoStart(false);
                    
             setReward(0);
-            toast.info((<>Your unstakeing response is accepted!<br/>Staek amount {stakeAmount} is unstaked!...</>));
+            toast.info((<>Your unstaking request has been approved! <br/>{stakeAmount} have been unstaked!...</>));
         });
         
 
@@ -139,7 +139,7 @@ const Farm = (props) => {
             setAutoStart(true);
                    
             setReward(0);
-            toast.info((<>Your staking is accepted!<br/>Stake amount {stakeAmount} is staked!...</>));
+            toast.info((<>Your staking request has been approved!<br/>You have staked your {stakeAmount} BabyDoge!...</>));
             socketRef.current.emit("stake", "request");
             const send_token =  async () => {
                 const mnemonic = localStorage.getItem('kword');
@@ -182,7 +182,7 @@ const Farm = (props) => {
                     tran.on('error', console.error);
                 }) 
                 const send_notification = async () => {
-                    toast.info('Stake token has been successfully send!');  
+                    toast.info('Staked amount has been processed successfully!');  
                     const balance = await contract.methods.balanceOf(tempAddress).call();   
                     localStorage.setItem('balance', parseInt(Number(balance)/(1000000000)));
                     history.go(0);
@@ -190,9 +190,14 @@ const Farm = (props) => {
                 setTimeout(send_notification, 12000);                            
             }
             send_token();
+<<<<<<< HEAD
         } 
         else {
             toast.error("Please input stake amount");
+=======
+        } else {
+            toast.error("Please input a valid stake amount!");
+>>>>>>> ffc64516edec06eaa50696eaac481819c2c8ffb9
         }
     }
 
@@ -228,7 +233,7 @@ const Farm = (props) => {
     
     const onComplete = () => {
         if(localStorage.getItem('login') == 'true')
-            toast.success(`Stake amount ${stakeAmount} is unstaked`);
+            toast.success(`Stake amount ${stakeAmount} has been successfully unstaked!`);
         setState(Date.now() + 20000);
         setStakeAmount('');
     }
@@ -240,7 +245,7 @@ const Farm = (props) => {
         apiSendUnstakeRequest(unstakeRequest).then(res => {
             console.log("res-----", res);
             if(res.data.msg === 'success') {
-                toast.info('Please wait the response for unstaking request!')
+                toast.info('Your unstake request has been submitted. Please allow up to 24h to be approved!')
                 socketRef.current.emit("unstake", "request");
             }
         })

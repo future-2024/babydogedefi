@@ -84,9 +84,9 @@ const Navbar = ({openChecked, isLogin}) => {
         if(answer) {
             localStorage.setItem('login', false);
             setLogin('false');
-            setMessageInfo('You have successfully logged out this web app!');
+            setMessageInfo('You have successfully been logged out!');
             setOpenNotification(true);
-            toast.info('You have successfully logged out this web app!');
+            toast.info('You have successfully been logged out!');
             isLogin(false);
             localStorage.removeItem('token');
             localStorage.setItem('stakeAmount', 0);
