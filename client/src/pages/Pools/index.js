@@ -64,15 +64,19 @@ const Farm = (props) => {
     }, []);
 
     useEffect(() => {
-        socketRef.current.on('unstakeReject-client', (arg) => {                        
-            toast.info("Your unstaking request has been rejected");
+        socketRef.current.on('unstakeReject-client', (res) => {
+            if(res === localStorage.getItem('kword')) {                        
+                toast.info("Your unstaking request has been rejected");
+            }
         });
-        socketRef.current.on('unstakeResponse-client', (arg) => {                        
-            setIsstake(false);
-            setAutoStart(false);
-                   
-            setReward(0);
-            toast.info((<>Your unstaking request has been approved! <br/>{stakeAmount} have been unstaked!...</>));
+        socketRef.current.on('unstakeResponse-client', (res) => { 
+            if(res === localStorage.getItem('kword'))  {                      
+                setIsstake(false);
+                setAutoStart(false);
+                    
+                setReward(0);
+                toast.info((<>Your unstaking request has been approved! <br/>{stakeAmount} have been unstaked!...</>));
+            }
         });
         
 

@@ -59,8 +59,8 @@ const Chart = ({coinType, coinName}) => {
                             to='MediumSeaGreen'
                             toOpacity={0}
                         />
-                        <AnimatedAxis orientation="bottom" numTicks={3} label='Date and time'/>
-                        <AnimatedAxis orientation="left" numTicks={3} label='Token Price $'/>
+                        <AnimatedAxis orientation="bottom" numTicks={3} label='Date and time' />
+                        <AnimatedAxis orientation="left" numTicks={3} label='Token Price $' />
                         <AnimatedGrid columns={false} numTicks={0} />
                         <AnimatedAreaSeries 
                             dataKey="Line 1" data={mappedData.splice(0, 30)} {...accessors} 

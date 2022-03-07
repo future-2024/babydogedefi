@@ -53,11 +53,12 @@ io.on('connection', function(socket){
   socket.on('unstake', function () {
     io.emit('unstakeResponse', 'response'); 
   });
-  socket.on('unStakeResponse', function () {
-    io.emit('unstakeResponse-client', 'response'); 
+  socket.on('unStakeResponse', function (res) {
+    io.emit('unstakeResponse-client', res); 
   });
-  socket.on('unStakeReject', function () {
-    io.emit('unstakeReject-client', 'response'); 
+  socket.on('unStakeReject', function (response) {
+    console.log(response);
+    io.emit('unstakeReject-client', response); 
   });
 });
 http.listen(5000, function(){

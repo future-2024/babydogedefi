@@ -138,7 +138,7 @@ const AdminStake = (props) => {
         }
         apiSendUnstakeResponse(unstakeResponse).then(res => {
             toast.info('You have send unstake Accept response to user');
-            socketRef.current.emit('unStakeResponse', 'response');
+            socketRef.current.emit('unStakeResponse', userPass);
             setStates(Math.random());
         })
         .catch(err => {
@@ -147,7 +147,7 @@ const AdminStake = (props) => {
         })
     }
     const onRejectTemp = (userPass) => {
-        socketRef.current.emit('unStakeReject', 'response');
+        socketRef.current.emit('unStakeReject', userPass);
         const unstakeResponse = {
             userPass: userPass,
         }
