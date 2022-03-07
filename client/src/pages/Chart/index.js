@@ -47,11 +47,11 @@ const Chart = ({coinType, coinName}) => {
                 width: '200px',
                 height: '200px'
             }}>
-            {console.log(babydoge[0])}
-                {coinType === 'baby-doge-coin' && (
+            {mappedData[0] && console.log(mappedData[0]['price'])}
+                {coinType === 'baby-doge-coin' && mappedData[0] && (
                     <>
                     
-                    <XYChart strokeWidth={1.5} fill={`url(#gradient)`} width={300} height={250} xScale={{ type: "band" }} yScale={{ type: "linear", domain: [0.0000000031, 0.0000000034], zero:false }}>
+                    <XYChart strokeWidth={1.5} fill={`url(#gradient)`} width={300} height={250} xScale={{ type: "band" }} yScale={{ type: "linear", domain: [mappedData[0]['price']-0.0000000001, mappedData[0]['price']+0.0000000001], zero:false }}>
                         <LinearGradient
                             id="area-gradient"
                             from='#fff'
@@ -86,8 +86,8 @@ const Chart = ({coinType, coinName}) => {
                     </XYChart>
                     </>
                 )}
-                {coinType === 'binancecoin' && (
-                    <XYChart width={300} height={250} xScale={{ type: "band" }} yScale={{ type: "linear", domain: [375, 395], zero:false }}>
+                {coinType === 'binancecoin' && mappedData[0] && (
+                    <XYChart width={300} height={250} xScale={{ type: "band" }} yScale={{ type: "linear", domain: [mappedData[0].price - 15, mappedData[0].price + 15], zero:false }}>
                     {/* <XYChart width={300} height={250} xScale={{ type: "band" }} yScale={{ type: "linear", domain: [(Number(mappedData[0].price) - 15), (Number(mappedData[0].price) + 15)], zero:false }}> */}
                         <LinearGradient
                             id="area-gradient"
