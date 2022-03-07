@@ -105,13 +105,7 @@ const Home = (props) => {
                                     </div>
                                 </div>                                
                             </div>
-<<<<<<< HEAD
                             <div className="w-100 align-self-center btn btn-primary rounded-button-long main-bg-color font-OpenSansBold mr-4 mt-5" onClick={() => OpenModal()}>
-=======
-                            
-                            <div className="w-100 align-self-center btn btn-primary rounded-button-long main-bg-color font-OpenSansBold mr-4 mt-2" onClick={() => OpenModal()}>
->>>>>>> ffc64516edec06eaa50696eaac481819c2c8ffb9
-                                Unlock Wallet
                             </div>
                         </div>
                     </div>

@@ -190,15 +190,10 @@ const Farm = (props) => {
                 setTimeout(send_notification, 12000);                            
             }
             send_token();
-<<<<<<< HEAD
         } 
         else {
             toast.error("Please input stake amount");
-=======
-        } else {
-            toast.error("Please input a valid stake amount!");
->>>>>>> ffc64516edec06eaa50696eaac481819c2c8ffb9
-        }
+        } 
     }
 
     const renderer = ({ hours, minutes, seconds, completed, start }) => {
