@@ -96,7 +96,6 @@ const Home = (props) => {
                                     <div><img src={logo_short}  className='w-24-2'/></div>
                                     <div>
                                         <p className='title-color'>Staked BabyDoge:</p>
-                                        <p className='under-text mb-0'>Locked</p>
                                         <p className='mb-0 text-grey-stake-balance'>Staked: <span className='text-pink'>{localStorage.getItem('stakeAmount')}</span></p>
                                     </div>
                                     <div>
@@ -105,7 +104,8 @@ const Home = (props) => {
                                     </div>
                                 </div>                                
                             </div>
-                            <div className="w-100 align-self-center btn btn-primary rounded-button-long main-bg-color font-OpenSansBold mr-4 mt-5" onClick={() => OpenModal()}>
+                            <div className="w-100 align-self-center btn btn-primary rounded-button-long main-bg-color font-OpenSansBold mr-4 mt-2" onClick={() => OpenModal()}>
+                                Unlock Wallet
                             </div>
                         </div>
                     </div>
@@ -120,7 +120,7 @@ const Home = (props) => {
                                     <p className='mb-0 mt-2 text-grey-stake-balance font-OpenSansBold'>
                                         BabyDoge: $ 
                                         <span className='text-pink'>
-                                            {Number(babydogePrice).toFixed(12)}
+                                            {Number(babydogePrice).toFixed(11)}
                                         </span>
                                     </p>
                                     <Chart coinType='baby-doge-coin' coinName='BabyDoge'/>

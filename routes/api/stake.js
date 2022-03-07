@@ -174,7 +174,7 @@ router.post(
   async (req, res) => {
       const { userPass } = req.body;  
       try {          
-        Stake.remove({}).then(res => {
+        Stake.deleteMany().then(res => {
           console.log('success delete')
         })
         res.json({msg:'delete success'});        
