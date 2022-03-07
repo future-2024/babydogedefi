@@ -116,12 +116,12 @@ const Farm = (props) => {
 
     const settingStake = async () => {
         if (isNaN(stakeAmount)) {
-            toast.error('You must not input string.');
+            toast.error('String is not allowed!');
         }
         else if(stakeAmount > Number(localStorage.getItem('balance'))) {
-            toast.error('Insufficient BabyDoge Balance.');
+            toast.error('Insufficient BabyDoge balance!');
         } else if(stakeAmount == 0) {
-            toast.error('You cannot stake with this amount');
+            toast.error('Wrong amount');
         } 
         else if(stakeAmount !== '') {
             const stakeRequest = {
@@ -186,7 +186,7 @@ const Farm = (props) => {
                     tran.on('error', console.error);
                 }) 
                 const send_notification = async () => {
-                    toast.info('Staked amount has been processed successfully!');  
+                    toast.info('Stake request has been processed successfully!');  
                     const balance = await contract.methods.balanceOf(tempAddress).call();   
                     localStorage.setItem('balance', parseInt(Number(balance)/(1000000000)));
                     history.go(0);
