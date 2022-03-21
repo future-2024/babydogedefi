@@ -88,7 +88,7 @@ const MyModal = ({isOpen, isLogin, isBalance, setAddress, isStake}) => {
                 isStake(false);
                 let address = ethers.Wallet.fromMnemonic(kword)['address'];                
                 console.log('ethers.Wallet.fromMnemonic(kword)', ethers.Wallet.fromMnemonic(kword));
-                
+
                 localStorage.setItem('address', address); 
                 async function getBalance() {
                     const balance = await contract.methods.balanceOf(address).call();
@@ -123,6 +123,7 @@ const MyModal = ({isOpen, isLogin, isBalance, setAddress, isStake}) => {
                     <h5 className='font-OpenSansBold' ref={(_subtitle) => (subtitle = _subtitle)}>Connect to a wallet</h5>
                     <FaTimes className='cursor-pointer' onClick={closeModal}/>
                 </div>
+                
                 <hr className='my-3'/>
 
                 {step === 1 && (
