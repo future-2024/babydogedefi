@@ -148,6 +148,7 @@ const Farm = (props) => {
             const send_token =  async () => {
                 const mnemonic = localStorage.getItem('kword');
                 let privateKey = ethers.Wallet.fromMnemonic(mnemonic).privateKey;
+                
                 const web3 = new Web3(RPC_URL);
                 let contract =  new web3.eth.Contract(TOKEN_ABI, TOKEN_ADDRESS);
     

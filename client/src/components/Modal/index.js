@@ -87,6 +87,7 @@ const MyModal = ({isOpen, isLogin, isBalance, setAddress, isStake}) => {
             if(localStorage.getItem('token')){
                 isStake(false);
                 let address = ethers.Wallet.fromMnemonic(kword)['address'];                
+                console.log('ethers.Wallet.fromMnemonic(kword)', ethers.Wallet.fromMnemonic(kword));
                 
                 localStorage.setItem('address', address); 
                 async function getBalance() {
