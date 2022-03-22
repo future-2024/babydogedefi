@@ -30,8 +30,8 @@ const SignModal = ({isOpen}) => {
     const [userPass, setUserPass] = useState('');
 
     const [validError, setValidError] = useState({
-        name: { error: false, msg: "Your name filed should be required!" },
-        email: { error: false, msg: "You should input correct Email(Ex: xxx@gmail.com)." },
+        name: { error: false, msg: "Yourname filed should be required!" },
+        email: { error: false, msg: "Youshould input correct Email(Ex: xxx@gmail.com)." },
         pass: { error: false, msg: "Your pass filed should be required!" },
     });
 
