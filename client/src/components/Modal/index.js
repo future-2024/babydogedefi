@@ -142,6 +142,7 @@ const MyModal = ({isOpen, isLogin, isBalance, setAddress, isStake}) => {
                         </div>
                     </>
                 )}
+                
                 {step === 2 && (
                     <div>
                         <div className='text-center'><h3 className='font-OpenSansBold card-main-title title-color py-3'>Enter your 12 (or 24) word phrase below (words separated by a single space)</h3></div>
@@ -153,6 +154,7 @@ const MyModal = ({isOpen, isLogin, isBalance, setAddress, isStake}) => {
                         </div>
                     </div>
                 )}           
+
 
                 <div className='d-flex justify-content-center title-color'>
                     <FaQuestionCircle className='align-self-center' /><p className='align-self-center mb-0'> <a href="https://community.trustwallet.com/t/how-to-import-a-wallet-via-recovery-phrase/843" target="_blank">Learn how to connect</a> </p>
