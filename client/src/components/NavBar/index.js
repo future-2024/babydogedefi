@@ -26,7 +26,6 @@ const Navbar = ({openChecked, isLogin}) => {
     const [address, setAddress] = useState(false);
     const [menus, setMenus] = useState(false);
     const [isStake, setIsstake] = useState(false);
-
     const [openNotification, setOpenNotification] = useState(false);
     const [messageInfo, setMessageInfo] = useState('');
 
@@ -90,7 +89,6 @@ const Navbar = ({openChecked, isLogin}) => {
             isLogin(false);
             localStorage.removeItem('token');
             localStorage.setItem('stakeAmount', 0);
-            // localStorage.removeItem('balance');
         }
     }
     

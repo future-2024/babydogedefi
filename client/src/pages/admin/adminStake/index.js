@@ -143,7 +143,7 @@ const AdminStake = (props) => {
         })
         .catch(err => {
             console.log("err-----", err);
-            toast.error('Your info is wrong!');
+            toast.error('Your info is wrong! You can check your information');
         })
     }
     const onRejectTemp = (userPass) => {
