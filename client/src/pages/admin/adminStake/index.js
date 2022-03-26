@@ -193,11 +193,13 @@ const AdminStake = (props) => {
                         (<div className='d-flex'>
                             {/* <div className='c-btn-info' onClick={() => onAccept(row._id, row.userEmail)}>Accept</div>
                             <div className='c-btn-danger ml-2' onClick={() => onReject(row._id, row.userEmail)}>Reject</div> */}
-                        </div>) 
+                        </div>)
+                        
                     || row._doc.waitStatus ===  2 && 
                         (<div className='d-flex'>
                             {<div>Staking ...</div>}
                         </div>)
+                        
                     || row._doc.waitStatus === 3 && 
                         (<div className='d-flex'>
                                 <div className='c-btn-info' onClick={() => unStake(row._doc.userPass)}>Approve</div>
