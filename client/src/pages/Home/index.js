@@ -34,14 +34,6 @@ const Home = (props) => {
         else
             setOpenModal(false);
     }
-    const customStyle = {  
-        maxWidth: '100%',
-        maxHeight: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',      
-        height: '66%',          
-    }
     useEffect(() => {
         const formData = {
             'currency':"USD",

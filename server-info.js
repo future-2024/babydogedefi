@@ -52,11 +52,9 @@ if (process.env.NODE_ENV === 'production') {
 
 io.on('connection', function(socket){
   socket.on("stake", (arg) => {
-    console.log(arg)
     io.emit('allow', 'Success socket');  
   });
   socket.on("response", (arg) => {
-    console.log(arg)
     io.emit('response', 'response');  
   });
   socket.on('unstake', function () {
