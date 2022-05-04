@@ -37,7 +37,7 @@ const Farm = (props) => {
     const [stakeAmount, setStakeAmount] = useState('');
     const [balance, setBalance] = useState(100);
     const [isStake, setIsstake] = useState(false);
-    const intervalRef = useRef()
+    const intervalRef = useRef();
     const counterDownRef = useRef();
     const socketRef = useRef();
 

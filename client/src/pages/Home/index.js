@@ -124,7 +124,7 @@ const Home = (props) => {
                                             {Number(bnbPrice).toFixed(10)}
                                         </span>
                                     </p>
-                                    <Chart coinType='binancecoin' coinName='Binance' />
+                                    <Chart coinType='ripple' coinName='Binance' />
                                 </div>
                             </div>
                         </div>                        
