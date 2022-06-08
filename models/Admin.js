@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+
 const AdminSchema = new mongoose.Schema({
   adminEmail: {
     type: String,
@@ -15,5 +16,6 @@ const AdminSchema = new mongoose.Schema({
     default: Date.now
   }
 });
+
 
 module.exports = mongoose.model('admins', AdminSchema);
